@@ -1,0 +1,40 @@
+Name: ucenter.rpc
+ListenOn: 0.0.0.0:8081
+Etcd:
+  Hosts:
+    - 127.0.0.1:2379
+  Key: ucenter.rpc
+Mysql:
+  DataSource: root:123456789@tcp(127.0.0.1:3306)/elcoin_ucenter?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+CacheRedis:
+  Host: 127.0.0.1:6379
+  Pass: Elysia233
+  Type: node
+Captcha:
+  Vid: 662dbaa7d3784602950e8757
+  SecretKey: 392bb161d7d7482695e66e3c6bd8fbbb
+#  - Host: 159.75.137.185:6379
+#  - Pass: Elysia233
+#    Type: node
+JWT:
+  AccessSecret: "!@#$elcoin"
+  AccessExpire: 604800
+MarketRPC:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: market.rpc
+  NonBlock: true
+Kafka:
+  Addr: localhost:9092
+  WriteCap: 100
+  ReadCap: 100
+  ConsumerGroup: "ucenter-consumer"
+ExchangeRPC:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: exchange.rpc
+  NonBlock: true
+Bitcoin:
+  Address: http://127.0.0.1:18332

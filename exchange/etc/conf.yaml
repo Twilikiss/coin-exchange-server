@@ -1,0 +1,34 @@
+Name: exchange.rpc
+ListenOn: 0.0.0.0:8083
+Etcd:
+  Hosts:
+    - 127.0.0.1:2379
+  Key: exchange.rpc
+Mysql:
+  DataSource: root:123456789@tcp(127.0.0.1:3306)/elcoin_exchange?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+CacheRedis:
+  Host: 127.0.0.1:6379
+  Pass: Elysia233
+  Type: node
+UCenterRPC:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: ucenter.rpc
+  NonBlock: true
+MarketRPC:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: market.rpc
+  NonBlock: true
+Kafka:
+  Addr: localhost:9092
+  WriteCap: 100
+  ReadCap: 100
+  ConsumerGroup: "exchange-consumer"
+Mongo:
+  Url: "mongodb://localhost:27017"
+  Username: "admin"
+  Password: "Cxb1314."
+  DataBase: "elcoin"

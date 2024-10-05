@@ -1,0 +1,28 @@
+Okx:
+  ApiKey: "fbe2edca-3537-4857-9170-70cef54d0aae"
+  SecretKey: "8CD753031831D2601FDBD6CCE04EEBD0"
+  Pass: "Cxb1314."
+  Host: "https://www.okx.com"
+  Proxy: "http://127.0.0.1:7890"
+  GetKlineRest: "/api/v5/market/candles"
+Mongo:
+  Url: "mongodb://localhost:27017"
+  Username: "admin"
+  Password: "Cxb1314."
+  DataBase: "elcoin"
+Kafka:
+  Addr: localhost:9092
+  WriteCap: 100
+  ReadCap: 100
+CacheRedis:
+  Host: 127.0.0.1:6379
+  Pass: Elysia233
+  Type: node
+UCenterRPC:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: ucenter.rpc
+  NonBlock: true
+Bitcoin:
+  Address: http://127.0.0.1:18332
