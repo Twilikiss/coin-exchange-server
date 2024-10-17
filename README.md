@@ -371,11 +371,11 @@ spec:
     app: elcoin-mysql
 ~~~
 
-![image-20230517150626172](D:\go_projects\coin-exchange-server\images\image-20230517150626172.png)
+![image-20230517150626172](images/image-20230517150626172.png)
 
 连接后，将数据库导入进去：
 
-![image-20241017234554462](D:\go_projects\coin-exchange-server\images\image-20241017234554462.png)
+![image-20241017234554462](images/image-20241017234554462.png)
 
 > 这时候，我们访问`elcoin-mysql-0.elcoin-mysql-headless.elcoin.svc.cluster.local:3306`即可访问到mysql数据库
 
@@ -976,7 +976,7 @@ spec:
 
 打包镜像之前，配置文件做一个prod环境，替换为上述的地址
 
-![image-20230520004630812](D:\go_projects\coin-exchange-server\images\image-20230520004630812.png)
+![image-20230520004630812](images/image-20230520004630812.png)
 
 
 
