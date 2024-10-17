@@ -1,0 +1,17 @@
+Name: market.rpc
+ListenOn: 0.0.0.0:8082
+Etcd:
+  Hosts:
+    - elcoin-etcd3-hs.elcoin.svc.cluster.local:2379
+  Key: market.rpc
+Mysql:
+  DataSource: root:123456789@tcp(elcoin-mysql-headless.elcoin.svc.cluster.local:3306)/elcoin_exchange?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+CacheRedis:
+  Host: elcoin-redis-hs.elcoin.svc.cluster.local:6379
+  Pass: Elysia233
+  Type: node
+Mongo:
+  Url: "mongodb://elcoin-mongo-hs.elcoin.svc.cluster.local:27017"
+  Username: "admin"
+  Password: "Cxb1314."
+  DataBase: "elcoin"

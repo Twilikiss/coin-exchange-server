@@ -1,0 +1,12 @@
+syntax = "proto3";
+package main;
+
+// protoc-gen-go 版本大于1.4.0, proto文件需要加上go_package,否则无法生成
+option go_package = "./out";
+
+// this is a comment
+message Student {
+  string name = 1;
+  bool male = 2;
+  repeated int32 scores = 3;
+}

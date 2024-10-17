@@ -1,0 +1,15 @@
+go 1.22.1
+
+use (
+	./coin-common
+	./grpc-common
+	./ucenter
+	./ucenter-api
+	./test
+	./jobcenter
+	./market
+	./market-api
+	./exchange
+	./exchange-api
+	test/kafkaTest
+)
