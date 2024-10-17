@@ -34,7 +34,7 @@ build_image:
     - echo "jobcenter上传harbor"
 ########################### deploy阶段 ###########################
 deploy_image:
-  image:  registry.cn-hangzhou.aliyuncs.com/mszlu/kubectl:1.24
+  image:  registry.cn-hangzhou.aliyuncs.com/twilikiss/kubectl:1.24.0
   stage: deploy
   tags:
     - k8s
