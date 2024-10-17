@@ -1,0 +1,13 @@
+Name: marketapi-api
+Host: 0.0.0.0
+Port: 8889
+MarketRPC:
+  Etcd:
+    Hosts:
+      - elcoin-etcd3-hs.elcoin.svc.cluster.local:2379
+    Key: market.rpc
+Kafka:
+  Addr: elcoin-kafka-hs.elcoin.svc.cluster.local:9092
+  WriteCap: 100
+  ReadCap: 100
+  ConsumerGroup: "kline1m-thumb-consumer"

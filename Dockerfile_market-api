@@ -1,0 +1,14 @@
+FROM registry.cn-hangzhou.aliyuncs.com/twilikiss/golang:1.22 AS build-stage
+WORKDIR /app
+COPY . ./
+RUN go env -w GO111MODULE=on
+RUN go env -w GOPROXY=https://goproxy.cn,direct
+RUN go mod download
+RUN CGO_ENABLED=0 GOOS=linux go build  -o /market-api market-api/main.go
+FROM registry.cn-hangzhou.aliyuncs.com/twilikiss/distroless_base-debian:1.0 AS build-release-stage
+WORKDIR /
+COPY --from=build-stage /market-api /market-api
+COPY --from=build-stage /app/market-api/etc/conf-prod.yaml /etc/conf.yaml
+EXPOSE 8889
+USER nonroot:nonroot
+ENTRYPOINT ["/market-api"]

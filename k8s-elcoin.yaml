@@ -1,0 +1,314 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elcoin-exchange-deployment
+  namespace: elcoin
+  labels:
+    app: exchange
+spec:
+  selector:
+    matchLabels:
+      app: exchange
+  replicas: 3
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: exchange
+    spec:
+      containers:
+        - image: testharbor.com/elcoin/exchange:{VERSION}
+          name: exchange
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8083
+              protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elcoin-exchange-api-deployment
+  namespace: elcoin
+  labels:
+    app: exchange-api
+spec:
+  selector:
+    matchLabels:
+      app: exchange-api
+  replicas: 1
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: exchange-api
+    spec:
+      containers:
+        - image: testharbor.com/elcoin/exchange-api:{VERSION}
+          name: exchange-api
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8890
+              protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elcoin-market-deployment
+  namespace: elcoin
+  labels:
+    app: market
+spec:
+  selector:
+    matchLabels:
+      app: market
+  replicas: 3
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: market
+    spec:
+      containers:
+        - image: testharbor.com/elcoin/market:{VERSION}
+          name: market
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8082
+              protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elcoin-market-api-deployment
+  namespace: elcoin
+  labels:
+    app: market-api
+spec:
+  selector:
+    matchLabels:
+      app: market-api
+  replicas: 3
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: market-api
+    spec:
+      containers:
+        - image: testharbor.com/elcoin/market-api:{VERSION}
+          name: market-api
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8889
+              protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elcoin-user-deployment
+  namespace: elcoin
+  labels:
+    app: user
+spec:
+  selector:
+    matchLabels:
+      app: user
+  replicas: 3
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      containers:
+        - image: testharbor.com/elcoin/ucenter:{VERSION}
+          name: market
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8081
+              protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elcoin-user-api-deployment
+  namespace: elcoin
+  labels:
+    app: user-api
+spec:
+  selector:
+    matchLabels:
+      app: user-api
+  replicas: 3
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: user-api
+    spec:
+      containers:
+        - image: testharbor.com/elcoin/ucenter-api:{VERSION}
+          name: user-api
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8888
+              protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elcoin-jobcenter-deployment
+  namespace: elcoin
+  labels:
+    app: jobcenter
+spec:
+  selector:
+    matchLabels:
+      app: jobcenter
+  replicas: 1
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: jobcenter
+    spec:
+      containers:
+        - image: testharbor.com/elcoin/jobcenter:{VERSION}
+          name: jobcenter
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: elcoin-proxy-hs
+  namespace: elcoin
+subsets:
+  - addresses:
+      - ip: 192.168.200.1
+    ports:
+      - port: 10809
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elcoin-proxy-hs
+  namespace: elcoin
+spec:
+  clusterIP: None
+  type: ClusterIP
+  ports:
+    - port: 10809
+      targetPort: 10809
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elcoin-exchange-api-service
+  namespace: elcoin
+spec:
+  selector:
+    app: exchange-api
+  type: ClusterIP
+  ports:
+    - port: 8890
+      targetPort: 8890
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elcoin-market-api-service
+  namespace: elcoin
+spec:
+  selector:
+    app: market-api
+  type: ClusterIP
+  ports:
+    - port: 8889
+      targetPort: 8889
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elcoin-user-api-service
+  namespace: elcoin
+spec:
+  selector:
+    app: user-api
+  type: ClusterIP
+  ports:
+    - port: 8888
+      targetPort: 8888
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: elcoin-ingress-http
+  namespace: elcoin
+spec:
+  rules:
+    - host: elcoin.test.com
+      http:
+        paths:
+          - path: /exchange
+            pathType: Prefix
+            backend:
+              service:
+                name: elcoin-exchange-api-service
+                port:
+                  number: 8890
+          - path: /market
+            pathType: Prefix
+            backend:
+              service:
+                name: elcoin-market-api-service
+                port:
+                  number: 8889
+          - path: /socket.io
+            pathType: Prefix
+            backend:
+              service:
+                name: elcoin-market-api-service
+                port:
+                  number: 8889
+          - path: /uc
+            pathType: Prefix
+            backend:
+              service:
+                name: elcoin-user-api-service
+                port:
+                  number: 8888
