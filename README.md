@@ -18,8 +18,9 @@
 
 我们需要先部署一个k8s集群，使用的环境为
 
-* 本地机器配置，3台机器 配置 8g内存 master 100g存储空间 60g存储空间
+* 本地机器配置，3台机器 配置 8g内存 master 100g存储空间 bitcoin数据存储节点200g，其余节点高于60g存储空间
 * 使用k8s1.24版本（容器运行时环境 containerd）
+* 强烈建议对应的机器配置尽可能高一些
 
 详细安装过程可以看这个：[kubernetes](https://www.yuque.com/twilikiss/k8s-study/gpheh70d8louq7ot)
 
