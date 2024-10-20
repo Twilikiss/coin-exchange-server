@@ -11,34 +11,39 @@ before_script:
     - .go/pkg/mod/
 ########################### build阶段 ###########################
 build_image:
-  image:  registry.cn-hangzhou.aliyuncs.com/twilikiss/kaniko-project-executor:v1.9.0-debug
+  image: registry.cn-hangzhou.aliyuncs.com/twilikiss/kaniko-project-executor:v1.9.0-debug
   stage: build
   tags:
     - k8s
   script:
-#    - mkdir -p /kaniko/.docker
+    #    - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"https://testharbor.com\":{\"auth\":\"YWRtaW46SGFyYm9yMTIzNDU=\"}}}" > /kaniko/.docker/config.json
-#    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile_user" --destination "testharbor.com/elcoin/ucenter:${CI_COMMIT_SHA}" --skip-tls-verify
+    #    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile_user" --destination "testharbor.com/elcoin/ucenter:${CI_COMMIT_SHA}" --skip-tls-verify
     - echo "ucenter上传harbor"
-#    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile_user-api" --destination "testharbor.com/elcoin/ucenter-api:${CI_COMMIT_SHA}" --skip-tls-verify
+    #    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile_user-api" --destination "testharbor.com/elcoin/ucenter-api:${CI_COMMIT_SHA}" --skip-tls-verify
     - echo "ucenter-api上传harbor"
-#    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile_market" --destination "testharbor.com/elcoin/market:${CI_COMMIT_SHA}" --skip-tls-verify
+    #    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile_market" --destination "testharbor.com/elcoin/market:${CI_COMMIT_SHA}" --skip-tls-verify
     - echo "market上传harbor"
-#    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile_market-api" --destination "testharbor.com/elcoin/market-api:${CI_COMMIT_SHA}" --skip-tls-verify
+    #    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile_market-api" --destination "testharbor.com/elcoin/market-api:${CI_COMMIT_SHA}" --skip-tls-verify
     - echo "market-api上传harbor"
-#    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile_exchange" --destination "testharbor.com/elcoin/exchange:${CI_COMMIT_SHA}" --skip-tls-verify
+    #    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile_exchange" --destination "testharbor.com/elcoin/exchange:${CI_COMMIT_SHA}" --skip-tls-verify
     - echo "exchange上传harbor"
-#    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile_exchange-api" --destination "testharbor.com/elcoin/exchange-api:${CI_COMMIT_SHA}" --skip-tls-verify
+    #    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile_exchange-api" --destination "testharbor.com/elcoin/exchange-api:${CI_COMMIT_SHA}" --skip-tls-verify
     - echo "exchange-api上传harbor"
-#    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile_jobcenter" --destination "testharbor.com/elcoin/jobcenter:${CI_COMMIT_SHA}" --skip-tls-verify
+    #    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile_jobcenter" --destination "testharbor.com/elcoin/jobcenter:${CI_COMMIT_SHA}" --skip-tls-verify
     - echo "jobcenter上传harbor"
 ########################### deploy阶段 ###########################
 deploy_image:
-  image:  registry.cn-hangzhou.aliyuncs.com/twilikiss/kubectl:1.24.0
+  image: registry.cn-hangzhou.aliyuncs.com/twilikiss/kubectl:1.24.0
   stage: deploy
   tags:
     - k8s
   script:
     - echo "开始部署elcoin k8s"
+    - mkdir -p $HOME/.kube
+    - echo "$KUBERNETES_SECRET" >> "$HOME/.kube/config"
+    - echo "$KUBERNETES_SECRET"
+    - kubectl version
+    - kubectl  get pods -A
     - sed -i "s#{VERSION}#${CI_COMMIT_SHA}#g" ./k8s-elcoin.yaml
     - kubectl apply -f ./k8s-elcoin.yaml -n elcoin
