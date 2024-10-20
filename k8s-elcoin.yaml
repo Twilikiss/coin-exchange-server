@@ -22,7 +22,8 @@ spec:
         app: exchange
     spec:
       containers:
-        - image: testharbor.com/elcoin/exchange:{VERSION}
+        - image: testharbor.com/elcoin/exchange:c1ae7217109ab2cbc9e18e47e73c019481d13013ac9e2d3c725dd58f503a2f6d
+#        - image: testharbor.com/elcoin/exchange:{VERSION}
           name: exchange
           imagePullPolicy: Always
           ports:
