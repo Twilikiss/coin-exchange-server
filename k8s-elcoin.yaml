@@ -22,7 +22,7 @@ spec:
         app: exchange
     spec:
       containers:
-        - image: testharbor.com/elcoin/exchange:c1ae7217109ab2cbc9e18e47e73c019481d13013ac9e2d3c725dd58f503a2f6d
+        - image: testharbor.com/elcoin/exchange@sha256:85d81c8e8953681e7ca6d06071258f899ef01230387a157e190e30ca22392dc1
 #        - image: testharbor.com/elcoin/exchange:{VERSION}
           name: exchange
           imagePullPolicy: Always

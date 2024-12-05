@@ -30,6 +30,27 @@ func NewMarketLogic(ctx context.Context, svcCtx *svc.ServiceContext) *MarketLogi
 	}
 }
 
+// FindSymbolThumbTrend 函数用于处理市场请求，根据给定的市场请求参数 req，查询并返回指定符号的价格趋势信息。
+//
+// 参数：
+//
+//	req *market.MarketReq: 包含市场请求参数的指针，用于指定查询的条件。
+//
+// 返回值：
+//
+//	*market.SymbolThumbRes: 指向市场符号缩略图响应的指针，包含查询结果。
+//	error: 如果在查询过程中发生错误，则返回相应的错误信息；否则返回 nil。
+//
+// 说明：
+//
+//	该函数首先记录接收到 RPC 远程调用请求的信息。
+//	然后，使用两个上下文和取消函数来设置查询操作的超时时间（5秒）。
+//	第一个查询操作是调用 exchangeCoinDomain 的 FindVisible 方法，获取可见的交易所硬币信息。
+//	第二个查询操作是根据请求中的周期（Period）参数，从市场域（marketDomain）中查询指定周期内的符号价格趋势信息。
+//	如果请求中未指定周期，则默认使用 "1H"（1小时）作为查询周期。
+//	查询结果通过 copier.Copy 函数复制到 market.SymbolThumbRes 结构的 List 字段中。
+//	如果在复制过程中发生错误，将记录错误信息并返回该错误。
+//	最后，返回包含查询结果的数据指针和 nil 错误值（表示成功）。
 func (l *MarketLogic) FindSymbolThumbTrend(req *market.MarketReq) (*market.SymbolThumbRes, error) {
 	logx.Info("接收到RPC远程调用请求，处理中")
 

@@ -39,7 +39,7 @@ deploy_image:
   tags:
     - k8s
   script:
-    - echo "开始部署elcoin k8s"
+    - echo "开始部署"
     - mkdir -p $HOME/.kube
     - echo "$KUBERNETES_SECRET" >> "$HOME/.kube/config"
     - echo "$KUBERNETES_SECRET"
